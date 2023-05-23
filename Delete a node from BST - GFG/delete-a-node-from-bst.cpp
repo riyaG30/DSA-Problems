@@ -155,6 +155,8 @@ Node *deleteNode(Node *root, int key) {
                 int mini = minVal(root->right)->data;
                 root->data = mini;
                 root->right = deleteNode(root->right,mini);
+                // delete minVal(root->right);
+              //  This line of code is attempting to delete the minimum value node in the right subtree, but it is not a valid operation. Deleting a node requires manipulating the pointers of the tree, not deleting the actual node object.
                 return root;
             }
         }
