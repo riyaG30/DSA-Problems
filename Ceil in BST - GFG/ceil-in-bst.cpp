@@ -110,7 +110,7 @@ int findCeil(Node* root, int x) {
         if(root->data == x)
         {
             ceil = root->data;
-        return ceil;
+           return ceil;
         }
         
         if(x < root->data)
