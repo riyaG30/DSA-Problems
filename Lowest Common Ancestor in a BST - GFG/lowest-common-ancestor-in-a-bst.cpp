@@ -99,6 +99,19 @@ int main()
 
 
 //Function to find the lowest common ancestor in a BST. 
+// <<<<<<<<<<<<<<<<<<<<<<<<-------------------------RECURSIVE APPROACH------------------------------->>>>>>>>>>>>>
+// TreeNode<int>* LCAinaBST(TreeNode<int>* root, TreeNode<int>* P, TreeNode<int>* Q)
+// {
+// 	// Write your code here
+//     if(root == NULL)
+//     return NULL;
+//     if(root->data < P->data && root->data < Q->data)
+//     return LCAinaBST(root->right, P,  Q);
+//     if(root->data > P->data && root->data > Q->data)
+//     return LCAinaBST(root->left, P,  Q);
+//     return root;
+// }
+
 Node* LCA(Node *root, int p, int q)
 {
    //Your code here
