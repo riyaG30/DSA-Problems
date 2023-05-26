@@ -28,10 +28,7 @@ public:
                 i++;
                 j++;
             }
-            else
-            {
-                
-            }
+            
         }
         return mx;
     }
