@@ -18,7 +18,7 @@ public:
             if(j-i+1 < k)
             {
                 j++;
-                continue;
+                
             }
             
             else if( j-i+1 == k)
