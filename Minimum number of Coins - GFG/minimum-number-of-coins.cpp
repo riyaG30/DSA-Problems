@@ -18,7 +18,7 @@ public:
          int sum = n;
          while(sum != 0 and  i < notes.size())
          {
-             if(notes[i] <= sum and  i < notes.size())
+             if(notes[i] <= sum )
              {
                  sum = sum-notes[i];
                  v.push_back(notes[i]);
