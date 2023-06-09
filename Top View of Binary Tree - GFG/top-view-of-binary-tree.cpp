@@ -106,38 +106,30 @@ class Solution
     {
         //Your code here
         vector<int> ans;
-        if(root == NULL)
-        return ans;
-        map<int,int> topNode;
-        queue <pair <Node* , int>> q;
-        q.push(make_pair(root,0));
+        map<int,int> mpp; // for storing the line number and first node data from top
+        queue<pair<Node*,int>> q ; // to store all node and their line number
+        q.push({root,0});
         while(!q.empty())
         {
-            pair<Node *,int> temp = q.front();
+            auto it = q.front();
             q.pop();
-            Node * frontNode = temp.first;
-            int hd = temp.second;
-            // if one value is already present for a key, do nothing and proceed
-        
-        if(topNode.find(hd) == topNode.end())
-        topNode[hd] = frontNode->data;
-        if(frontNode -> left)
+            Node* node = it.first;
+            int line = it.second;
+            if(mpp.find(line) == mpp.end())
+            mpp[line] = node->data;
+            if(node->left)
+            q.push({node->left,line-1});
+            if(node->right)
+            q.push({node->right,line+1});
+            
+        }
+        for(auto it :mpp)
         {
-            q.push(make_pair(frontNode->left,hd-1));
+            ans.push_back(it.second);
         }
-        if(frontNode -> right)
-        {
-            q.push(make_pair(frontNode->right,hd+1));
-        }
-        }
-        for(auto i : topNode)
-        {
-            ans.push_back(i.second);
-        }
-        
         return ans;
     }
-        
+
 };
 
 
