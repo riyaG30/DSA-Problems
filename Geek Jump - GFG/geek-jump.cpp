@@ -11,7 +11,7 @@ class Solution {
   
   
   
-  ///-------------------*//////////////////
+  ///----------MEMORISATION---------*//////////////////
   int f(int ind,vector<int>& height, vector<int>& dp)
   {
       if(ind == 0) return 0;
@@ -24,8 +24,20 @@ class Solution {
   }
     int minimumEnergy(vector<int>& height, int n) {
         // Code here
-        vector<int> dp(n+1,-1);
-        return f(n-1,height,dp);
+        // vector<int> dp(n+1,-1);
+        // return f(n-1,height,dp);
+        ///*********************TABULATION---------------*************
+        vector<int> dp(n,0);
+        dp[0] =0;
+        for(int i = 1; i <n;i++)
+        {
+            int fs = dp[i-1] + abs(height[i-1] - height[i]);
+            int ss = INT_MAX;
+            if(i>1)
+            ss = dp[i-2] + abs(height[i-2] - height[i]);
+            dp[i] = min(fs,ss);
+        }
+        return dp[n-1];
     }
 };
 
