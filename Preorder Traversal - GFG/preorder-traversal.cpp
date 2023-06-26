@@ -128,22 +128,20 @@ struct Node
 };
 */
 
-    void order(Node * root, vector<int> &ans)
-    {
-        if(root == NULL)
-        return;
-       
-        ans.push_back(root->data);
-        
-        order(root->left,ans);
-        order(root->right,ans);
-    }
-
 //Function to return a list containing the preorder traversal of the tree.
+void preT(Node* root, vector<int> &v)
+{
+    // base case 
+    if(root == NULL) return;
+    v.push_back(root->data);
+    preT(root->left,v);
+    preT(root->right,v);
+    
+}
 vector <int> preorder(Node* root)
 {
-    vector<int> ans;
+    vector<int> v;
+    preT(root,v);
+    return v;
   // Your code here
-  order(root,ans);
-  return ans;
 }
