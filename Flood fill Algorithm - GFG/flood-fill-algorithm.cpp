@@ -5,33 +5,29 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
 public:
-void dfs(int row, int col, vector<vector<int>> &ans, vector<vector<int>> &image, int newColor,int delRow[], int delCol[], int iniColor )
+void dfs(int row, int col,vector<vector<int>>& image,vector<vector<int>>& ans,
+int newColor,int iniColor,int delRow[], int delCol[])
 {
-    ans[row][col] = newColor;
     int n = image.size();
     int m = image[0].size();
-    // checking the neighbour colors  
-    for(int i = 0; i <4 ; i++ )
+    ans[row][col] = newColor;
+    for(int i = 0; i <4;i++)
     {
-        int nRow = row+delRow[i];
-        int nCol = col + delCol[i];
-        if(nRow >= 0 && nRow < n && nCol >= 0  && nCol<m && 
-        image[nRow][nCol] == iniColor && ans[nRow][nCol] != newColor)
-        {
-            dfs(nRow,nCol,ans,image,newColor,delRow,delCol,iniColor );
-        }
+        int nrow = row+delRow[i];
+        int ncol = col+delCol[i];
+        if(nrow >=0 && nrow <n && ncol>= 0 && ncol < m
+       && image[nrow][ncol] == iniColor && ans[nrow][ncol] != newColor  )
+        dfs(nrow,ncol,image,ans,newColor,iniColor,delRow,delCol);
     }
-    
-}
+ }
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
         // Code here 
-        int delRow[] = {-1,0,+1,0};
-    int delCol[] = {0,+1,0,-1};
-    
-        vector<vector<int>> ans = image;
+        vector<vector<int>> ans = image; 
         int iniColor = image[sr][sc];
-        dfs(sr,sc,ans,image, newColor,delRow,delCol,iniColor);
-        return ans;
+        int delRow[] = {-1,0,1,0};
+         int delCol[] = {0,1,0,-1};
+        dfs(sr,sc,image,ans,newColor,iniColor,delRow,delCol);
+       return ans; 
     }
 };
 
