@@ -5,55 +5,56 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-   
-    void bfs(int row,int col, vector<vector<int>> &vis,vector<vector<char>>& grid)
+    // Function to find the number of islands.
+    void bfs(int row, int col,  vector<vector<int>>&vis,vector<vector<char>>& grid)
     {
-         int n = grid.size();
+        int n  =grid.size();
         int m = grid[0].size();
-        vis[row][col] = 1;
-        queue<pair<int,int>> q;
+        vis[row][col] = 1; // marked as visited
+        queue<pair<int, int>> q;
         q.push({row,col});
         while(!q.empty())
         {
             int row = q.front().first;
             int col = q.front().second;
             q.pop();
-            // traverse in thne neighbours and mark them
-            for(int delrow = -1; delrow <= 1; delrow++)
-            {
-                for(int delcol = -1; delcol <= 1; delcol++)
-                {
-                    int nrow = row+delrow;
-                    int ncol = col+ delcol;
-                    if(nrow >= 0 && nrow <n && ncol >=0 && ncol <m && grid[nrow][ncol] == '1' && !vis[nrow][ncol])
-                    {
-                        vis[nrow][ncol] = 1;
-                        q.push({nrow,ncol});
-                    }
-                }
-            }
+            
+            //traverse in the neighbours and mark them
+             for(int delrow = -1; delrow<=1; delrow++)
+             {
+                 for(int delcol = -1; delcol <=1; delcol++)
+                 {
+                     int nrow  = row+delrow;
+                     int ncol = col+delcol;
+                     if(nrow>=0 && ncol >=0 && nrow < n && ncol <m
+                     && grid[nrow][ncol] == '1' && vis[nrow][ncol] == 0)
+                     {
+                         // now visiting them
+                         vis[nrow][ncol] = 1;
+                         q.push({nrow,ncol});
+                     }
+                 }
+             }
         }
     }
     int numIslands(vector<vector<char>>& grid) {
-        // Code here
-        int n = grid.size();
-        int m = grid[0].size();
         
-        //**************************/////////////////
-        vector<vector<int>> vis(n,vector<int>(m,0));  
-        int cnt = 0;
-        for(int row = 0; row<n; row++)
+        int n  =grid.size();
+        int m = grid[0].size();
+        vector<vector<int>>vis(n,vector<int>(m,0)); // visted matrix, initially marked as 0
+        int count = 0;
+        for(int row =0; row <n; row++)
         {
-            for(int col = 0 ; col <m; col++)
+            for(int col = 0; col <m; col++)
             {
-                if(!vis[row][col] && grid[row][col] == '1')
+                if(!vis[row][col]  && grid[row][col] == '1')
                 {
-                    cnt++;
+                    count++;
                     bfs(row,col,vis,grid);
                 }
             }
         }
-        return cnt;
+      return count;  
     }
 };
 
