@@ -7,38 +7,34 @@ class Solution {
 	public:
 		string FirstNonRepeating(string A){
 		    // Code here
-		    unordered_map<char,int> count;
-		    queue<char> q;
 		    string ans = "";
-		    for(int i = 0; i < A.length();i++)
+		    unordered_map<char,int> count;
+		    queue<char>q;
+		    for(auto x : A)
 		    {
 		        // increase count
-		        char  ch  = A[i];		
-		        count[A[i]] ++;
+		        count[x]++;
 		        
-		        q.push(ch);
+		        // queue me push kar do
+		        q.push(x);
 		        while(!q.empty())
 		        {
 		            if(count[q.front()] > 1)
-		            {
-		                // repeating characters
-		                q.pop();
-		            }
+		            // repeating character
+		            q.pop();
 		            else
 		            {
-		                // non repeating character
+		                // ans me push kara do
 		                ans.push_back(q.front());
 		                break;
 		            }
-		            if(q.empty())
-		            {
-		                ans.push_back('#');
-		            }
 		        }
-		        
-		        
-		        
+		        if(q.empty())
+
+                    ans.push_back('#');		        
 		    }
+		    
+		    
 		    return ans;
 		}
 
