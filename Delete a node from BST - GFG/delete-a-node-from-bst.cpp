@@ -109,68 +109,49 @@ int main() {
 
 
 // Function to delete a node from BST.
-Node* minVal(Node* root) {
-    // Code here
-    if(root == NULL)
-    return NULL;
-    Node* temp = root;
-    while(temp ->left != NULL)
-    {
-        temp = temp->left;
-    }
-    return temp;
+Node *findLast(Node* root)
+{
+    if(root ->right == NULL) return root;
+    return findLast(root->right);
+}
+Node  *helper(Node* root)
+{
+    if(root->left == NULL) return (root->right);
+    else if (root->right == NULL) return (root->left);
+    Node *rightChild = root->right;
+    Node *lastRight = findLast(root->left);
+    lastRight->right = rightChild;
+    return root->left;
+    
 }
 Node *deleteNode(Node *root, int key) {
-    // your code goes here
-    if(root == NULL)
-        return root;
-        // if the value is found
-        if(root->data == key)
-        {
-            // it has 0 child
-            if(root->right == NULL && root->left == NULL)
-            {
-                delete root;
-                return NULL;
-            }
-            // it has 1 child
-            // left child present
-            if(root->right == NULL && root->left != NULL)
-            {
-                Node* temp = root->left;
-                delete root;
-                return temp;
-            }
-            // right child present
-            if(root->right != NULL && root->left == NULL)
-            {
-                Node* temp = root->right;
-                delete root;
-                return temp;
-            }
-            // it has 2 child
-            if(root->right != NULL && root->left != NULL)
-            {
-                // we r taking minimum of right subtree and making it as parent node
-                int mini = minVal(root->right)->data;
-                root->data = mini;
-                root->right = deleteNode(root->right,mini);
-                // delete minVal(root->right);
-              //  This line of code is attempting to delete the minimum value node in the right subtree, but it is not a valid operation. Deleting a node requires manipulating the pointers of the tree, not deleting the actual node object.
-                return root;
-            }
-        }
-        if(root->data > key)
-        {
-            // left part me jao
-            root->left = deleteNode(root->left,key);
-            return root;
-
-        }
-        else
-        {
-            root->right = deleteNode(root->right,key);
-            return root;
-        }
-
+   if(root == NULL) return NULL;
+   if(root->data == key) return helper(root);
+   Node*dummy = root;
+   while(root != NULL)
+   {
+       if(root->data > key)
+       {
+           if(root->left != NULL && root->left->data ==key)
+           {
+               root->left = helper(root->left);
+               break;
+           }
+           else
+           root = root->left;
+          
+       }
+       else
+       {
+            if(root->right != NULL && root->right->data ==key)
+           {
+               root->right = helper(root->right);
+               break;
+           }
+           else
+           root = root->right;
+          
+       }
+   }
+   return dummy;
 }
