@@ -115,31 +115,35 @@ int main() {
 
 
 // Function to insert a node in a BST.
-// inserting
-Node* insertIntoBst(Node* root,int d)
-{
+Node* insert(Node* root, int key) {
     if(root == NULL)
+    return new Node(key);
+    Node* curr = root;
+    while(true)
     {
-        //base case
-        root = new Node(d);
-        return root;
+        if(curr->data == key) return root;
+        if(curr->data < key)
+        {
+            if(curr->right != NULL)
+            curr = curr->right;
+            else
+            {
+                curr->right = new Node(key);
+                break;
+            }
+        }
+       else
+        {
+            if(curr -> left != NULL)
+            {
+                curr = curr->left;
+            }
+            else
+            {
+                curr->left = new Node(key);
+                break;
+            }
+        }
     }
-    if(d > root->data) // noth greater than and eqial to will be inserted into right
-    {
-        //indert into right of root
-         root->right = insertIntoBst(root->right,d);
-    }
-    else if(d == root->data)
-    {
-        
-    }
-    else
-     root->left = insertIntoBst(root->left,d);
-   return root;
-}
-Node* insert(Node* root, int d) {
-    // Your code here
-   return insertIntoBst(root,d);
-    
-    
+    return root;
 }
