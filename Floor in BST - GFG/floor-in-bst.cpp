@@ -54,60 +54,24 @@ int main() {
 // } Driver Code Ends
 
 
+// Function to search a node in BST.
 
-
- //<<<<<<<<<<<<<<<<<<<------------------------------BRUTTE FORCE APPROACH--------------------------------->>>>>>>>>>
-// void inorder(TreeNode<int> * root, vector<int> &v)
-// {
-//     if(root == NULL) return ;
-//     inorder(root->left, v);
-//     v.push_back(root->val);
-//     inorder(root->right, v);
-// }
-// int floorInBST(TreeNode<int> * root, int x)
-// {
-//     // Write your code here.
-//     if(root == NULL)
-//     return -1;
-//     vector<int> v;
-//     int ans = -1;
-//     inorder(root,v);
-//     int size = v.size();
-//     for(int i = size-1; i >= 0; i--)
-//     {
-//         if(v[i] <= x)
-//         {
-//             ans = v[i];
-//             return ans;
-//         }
-       
-        
-//     }
-    
-//       return -1;
-// }
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<--------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-int floor(Node* root, int x) {
-    int floor = -1;
-    if(root == NULL)
-    return -1;
+int floor(Node* root, int key) {
+    int fl = -1;
     while(root)
     {
-        if(root->data == x)
+        if(key == root->data )
         {
-            floor = root->data;
-        return floor;
+            fl = root->data;
+            return fl;
         }
-        
-        if(x > root->data)
+        if(key > root->data)
         {
-            floor = root->data;
-             root = root->right;
+            fl = root->data;
+            root  = root->right;
         }
         else
         root = root->left;
-       
     }
-    return floor;
+    return fl;
 }
