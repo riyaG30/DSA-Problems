@@ -8,32 +8,35 @@ class Solution
 	public:
 	//Function to find the shortest distance of all the vertices
     //from the source vertex S.
-   vector<int> dijkstra(int V, vector<vector<int>> adj[], int S)
-{
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    vector<int> dist(V, 1e9);
-    dist[S] = 0;
-    pq.push({0, S}); // Push source node with distance 0
-
-    while (!pq.empty())
+    vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
-        int currentDist = pq.top().first;
-        int node = pq.top().second;
-        pq.pop();
-        for (auto it : adj[node])
+        set<pair<int,int>> st;
+        vector<int> dist(V,1e9);
+        st.insert({0,S});
+        dist[S] = 0;
+        while(!st.empty())
         {
-            int edgeWt = it[1];
-            int adjNode = it[0];
-            if (currentDist + edgeWt < dist[adjNode])
+            auto it = *(st.begin());
+            int node = it.second;
+            int dis = it.first;
+            st.erase(it);
+            for(auto it : adj[node])
             {
-                dist[adjNode] = currentDist + edgeWt;
-                pq.push({dist[adjNode], adjNode});
+                int adjNode = it[0];
+                int edgeWt = it[1];
+                if(dis + edgeWt < dist[adjNode])
+                {
+                    if(dist[adjNode] != 1e9)
+                    {
+                        st.erase({dist[adjNode],adjNode});
+                    }
+                    dist[adjNode] = dis + edgeWt;
+                    st.insert({dist[adjNode],adjNode});
+                }
             }
         }
+        return dist;
     }
-    return dist;
-}
-
 };
 
 
