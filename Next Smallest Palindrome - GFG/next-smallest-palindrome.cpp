@@ -8,53 +8,42 @@ using namespace std;
 class Solution{
 public:
 	vector<int> generateNextPalindrome(int num[], int n) {
-	    // code here
-	bool change=true;
-        
-        for(int i=0 ; i<n/2 ; i++)
-        {
-            if(num[i]<num[n-i-1])
-            {
-                change=true;
-            }
-            else if(num[i]>num[n-i-1]){
-                change =false;
-            }
-            num[n-i-1]=num[i];
-        }
-        vector<int>ans(n);
-        for(int i=0 ; i<n ; i++)
-        {
-            ans[i]=num[i];
-        }
-        
-        int index=n/2;
-        
-        bool carry=change;
-        
-        while(carry && index<n)
-        {
-            if(ans[index]==9)
-            {
-                ans[index]=0;
-                ans[n-index-1]=0;
-            }
-            else{
-                ans[index]++;
-                ans[n-index-1]=ans[index];
-                carry=0;
-            }
-            index++;
-        }
-        if(carry)
-        {
-            ans.push_back(1);
-            ans[0]=1;
-        }
-        return ans;
-	    
+	     int i=n/2,j=n/2;
+   vector<int>v(n);
+   for(int x=0; x<n; x++) v[x]=num[x];
+   if((n&1)==0) i--;
+   while(i>=0){
+     if(v[j]>v[i]) break;
+     if(v[i]>v[j]){
+         while(i>=0){
+             v[j]=v[i];
+             i--,j++;
+         }
+         return v;
+     }
+     i--,j++;
+   }
+   i=n/2,j=n/2;
+   if((n&1)==0) i--;
+   while(i>=0){
+       if(num[i]!=9){
+           if(num[j]>=num[i]) num[i]++;
+           while(i>=0){
+               num[j]=num[i];
+               j++,i--;
+           }
+           for(int x=0; x<n; x++) v[x]=num[x];
+           return v;
+       }
+       else{
+           num[i]=0; num[j]=0;
+           i--,j++;
+       }
+   }
+   vector<int>ans(n+1,0);
+   ans[0]=1, ans[n]=1;
+   return ans;
 	}
-	
 
 };
 
