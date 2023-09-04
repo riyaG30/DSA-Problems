@@ -6,61 +6,58 @@ using namespace std;
 
 // } Driver Code Ends
 // User function Template for C++
-
 class Solution{
 public:
+    
+void bfs(int r,int c,vector<vector<int>>&visited,vector<vector<char>> &mat){
+    if(visited[r][c])return ;
+    queue<pair<int,int>>q;
+    q.push({r,c});
+    visited[r][c]=1;
+    while(!q.empty()){
+        int l=q.size();
+        while(l>0){
+            int r=q.front().first;
+            int c=q.front().second;
+            mat[r][c]='Y';
+            if(r+1<mat.size() && !visited[r+1][c] && mat[r+1][c]=='O'){
+                visited[r+1][c]=1;
+                q.push({r+1,c});
+            }
+             if(c+1<mat[0].size() && !visited[r][c+1] && mat[r][c+1]=='O'){
+                visited[r][c+1]=1;
+                q.push({r,c+1});
+            }
+             if(r-1>=0 && !visited[r-1][c] && mat[r-1][c]=='O'){
+                visited[r-1][c]=1;
+                q.push({r-1,c});
+            }
+             if(c-1>=0 && !visited[r][c-1] && mat[r][c-1]=='O'){
+                visited[r][c-1]=1;
+                q.push({r,c-1});
+            }
+            q.pop();
+            l--;
+        }
+    }
+    return ;
+}
     vector<vector<char>> fill(int n, int m, vector<vector<char>> mat)
     {
-         vector<vector<bool>>vis(n,vector<bool>(m,false));
-        vector<vector<char>>ans(n,vector<char>(m,'0'));
-         queue<pair<int,int>>q;
-        for(int i=0;i<m;i++){
-            if(mat[0][i]=='O'&&!vis[0][i]){
-                q.push({0,i});
-                vis[0][i]=true;
-            }
-            if(mat[n-1][i]=='O'&&!vis[n-1][i]){
-                q.push({n-1,i});
-                vis[n-1][i]=true;
-            }
-        }
-        for(int i=0;i<n;i++){
-            if(mat[i][m-1]=='O'&&!vis[i][m-1]){
-                q.push({i,m-1});
-                vis[i][m-1]=true;
-            }
-            if(mat[i][0]=='O'&&!vis[i][0]){
-            q.push({i,0});
-            vis[i][0]=true;
-            }
-        }
-        vector<pair<int,int>>v={{-1,0},{1,0},{0,-1},{0,1}};
-         while(!q.empty())
-       {
-           int x=q.front().first;
-           int y=q.front().second;
-           q.pop();
-           ans[x][y]='X';
-            for(int i=0;i<4;i++){
-               int a=v[i].first+x,b=v[i].second+y;
-               if(a<n&&a>=0&&b<m&&b>=0&&!vis[a][b]&&mat[a][b]=='O'){
-                   vis[a][b]=true;
-                   q.push({a,b});
-               }
-           }
+       vector<vector<int>>visited(n,vector<int>(m,0));
+       for(int i=0;i<mat[0].size();i++)if(mat[0][i]=='O')bfs(0,i,visited,mat);
+       for(int i=0;i<mat[0].size();i++)if(mat[n-1][i]=='O')bfs(n-1,i,visited,mat);
+       for(int i=0;i<n;i++)if(mat[i][0]=='O')bfs(i,0,visited,mat);
+       for(int i=0;i<n;i++)if(mat[i][m-1]=='O')bfs(i,m-1,visited,mat);
+       for(int i=0;i<n;i++){
+           for(int j=0;j<m;j++)if(mat[i][j]=='O')mat[i][j]='X';
        }
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(ans[i][j]=='0'){
-                    if(!vis[i][j])ans[i][j]='X';
-                }
-                else ans[i][j]='O';
-            }
-        }
-        return ans;
-        
-        
+       for(int i=0;i<n;i++){
+           for(int j=0;j<m;j++)if(mat[i][j]=='Y')mat[i][j]='O';
+       }
+       return mat;
     }
+
 };
 
 //{ Driver Code Starts.
